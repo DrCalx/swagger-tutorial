@@ -9,12 +9,15 @@ var config = {
 };
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
-  if (err) { throw err; }
+  if (err) { 
+    console.error(err.errors)
+    throw err
+  }
 
   // install middleware
   swaggerExpress.register(app);
 
-  var port = process.env.PORT || 10010;
+  var port = process.env.PORT || 8080;
   app.listen(port);
 
   if (swaggerExpress.runner.swagger.paths['/hello']) {

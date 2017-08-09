@@ -2,20 +2,72 @@ swagger: "2.0"
 info:
   version: "0.0.1"
   title: Hello World App
-# during dev, should point to your local machine
-host: swagger-tutorial-drcalx.c9users.io:8081
-# basePath prefixes all resource paths 
 basePath: /
-# 
 schemes:
-  # tip: remove http to make production-grade
-  - http
   - https
 consumes:
   - application/json
 produces:
   - application/json
 paths:
+  /single/{id}:
+    x-swagger-router-controller: single
+    get:
+      description: Get a single
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetSingleResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Update a single
+      parameters:
+        - name: id
+          description: Single id
+          type: string
+          in: path
+          required: true
+        - name: single
+          description: Single properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Single"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Deletes a single
+      parameters:
+        - name: id
+          description: Single id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /single:
     x-swagger-router-controller: single
     get:
@@ -29,10 +81,69 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Add a new single
+      parameters:
+        - name: data
+          description: Single properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Single"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
-# complex objects have schema definitions
 definitions:
+  Single:
+    type: object
+    required:
+      - title
+      - artist
+      - year
+    properties:
+      title:
+        type: string
+        description: Title of the single
+      artist:
+        type: string
+        description: Artist of the single
+      year:
+        type: number
+        description: Year the single was released
+  GeneralResponse:
+    type: object
+    required:
+      - success
+      - description
+    properties:
+      success:
+        type: number
+        description: Returns 1 if successful
+      description:
+        type: string
+        description: A short comment
+  GetSingleResponse:
+    required:
+      - id
+      - title
+      - year
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+      artist:
+        type: string
+      year:
+        type: number
   GetSinglesListResponse:
     required:
       - singles
