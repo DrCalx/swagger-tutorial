@@ -14,6 +14,7 @@ paths:
     x-swagger-router-controller: single
     get:
       description: Get a single
+      operationId: getOne
       parameters:
         - name: id
           type: string
@@ -30,6 +31,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
     put:
       description: Update a single
+      operationId: update
       parameters:
         - name: id
           description: Single id
@@ -53,6 +55,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
     delete:
       description: Deletes a single
+      operationId: delSingle
       parameters:
         - name: id
           description: Single id
@@ -72,6 +75,7 @@ paths:
     x-swagger-router-controller: single
     get:
       description: Gets the singles list
+      operationId: getAll
       responses:
         "200":
           description: Success
@@ -83,6 +87,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
     post:
       description: Add a new single
+      operationId: save
       parameters:
         - name: data
           description: Single properties
